@@ -15,4 +15,8 @@ mensajes = [] # lista global, cada mensaje es un diccionario
 lock_mensajes = threading.Lock() # asegura exclusion mutua al acceder a mensajes
 
 def manejar_cliente():
+    """
+    Gestiona la comunicacion con un cliente: recibe solicitudes json,
+    las procesa (insert/list) y envia respuestas json
+    """
     pass
