@@ -32,11 +32,10 @@ def manejar_cliente(conexion, direccion):
                 print(f"[{nombre_hilo}] Accion recibida: {accion}")
             except json.JSONDecodeError:
                 print(f"[{nombre_hilo}] Error: JSON invalido")
-                # TODO: enviar respuesta de ERROR
+                enviar_respuesta()
                 continue
-                pass
-            # TODO: dar respuesta (procesar la peticion)
-            # TODO: enviar respuesta
+            respuesta = procesar_peticion()
+            enviar_respuesta()
             pass 
     except Exception as exc:
         pass
