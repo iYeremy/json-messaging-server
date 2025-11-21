@@ -65,7 +65,10 @@ def procesar_peticion(peticion, nombre_hilo):
         return {"estado":"ok", "mensaje":"Mensaje registrado", "total": total}
     
     elif accion == "listar":
-        pass
+        with lock_mensajes:
+            lista = mensajes.copy() # copia de la lista global
+        print(f"[{nombre_hilo}] Listando {len(lista)} mensajes")
+        return {"estado":"ok", "mensaje": lista}
 
     else:
         print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
