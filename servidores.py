@@ -27,10 +27,17 @@ def manejar_cliente(conexion, direccion):
             if not data: 
                 break
             try:
-                pass # descodificar datos de bytes a texto
-                # despues intepretarlos como JSON (deserializacion)
+                peticion = json.loads(data.decode("utf-8"))
+                accion = peticion.get("accion","<sin accion>")
+                print(f"[{nombre_hilo}] Accion recibida: {accion}")
             except json.JSONDecodeError:
+                print(f"[{nombre_hilo}] Error: JSON invalido")
+                # TODO: enviar respuesta de ERROR
+                continue
                 pass
+            # TODO: dar respuesta (procesar la peticion)
+            # TODO: enviar respuesta
+            pass 
     except Exception as exc:
         pass
     finally:
