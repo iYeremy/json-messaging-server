@@ -111,3 +111,6 @@ def iniciar_servidor():
                                     args=(conn, addr)
                                     )
             hilo.start()
+
+if __name__ == "__main__":
+    iniciar_servidor()
