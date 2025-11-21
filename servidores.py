@@ -18,6 +18,8 @@ def manejar_cliente(conexion, direccion):
     """
     Gestiona la comunicacion con un cliente: recibe solicitudes json,
     las procesa (insert/list) y envia respuestas json
+    Args: conexion(socket): socket conectado con el cliente
+          direccion(tuple): direccion IP y puerto del cliente
     """
     nombre_hilo = threading.current_thread().name
     print(f"[{nombre_hilo}] Sesion iniciada con {direccion}")
