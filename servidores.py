@@ -14,7 +14,7 @@ PORT = 50000
 mensajes = [] # lista global, cada mensaje es un diccionario
 lock_mensajes = threading.Lock() # asegura exclusion mutua al acceder a mensajes
 
-def manejar_cliente(direccion):
+def manejar_cliente(conexion, direccion):
     """
     Gestiona la comunicacion con un cliente: recibe solicitudes json,
     las procesa (insert/list) y envia respuestas json
@@ -22,7 +22,10 @@ def manejar_cliente(direccion):
     nombre_hilo = threading.current_thread().name
     print(f"[{nombre_hilo}] Sesion iniciada con {direccion}")
     try:
-        pass
+        while True:
+            data = conexion.recv(1024) # recibe y lee hasta 1024 bits en su flujo
+            if not data: 
+                break
     except Exception as exc:
         pass
     finally:
