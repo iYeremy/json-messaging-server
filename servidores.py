@@ -34,11 +34,10 @@ def manejar_cliente(conexion, direccion):
                 print(f"[{nombre_hilo}] Accion recibida: {accion}")
             except json.JSONDecodeError:
                 print(f"[{nombre_hilo}] Error: JSON invalido")
-                enviar_respuesta()
+                enviar_respuesta(conexion, estado = "error", mensaje="Formato JSON invalido")
                 continue
             respuesta = procesar_peticion(peticion, nombre_hilo)
-            enviar_respuesta()
-            pass 
+            enviar_respuesta(conexion, **respuesta)
     except Exception as e:
         print(f"[{nombre_hilo}] Error inesperado: {e}")
     finally:
@@ -76,8 +75,18 @@ def procesar_peticion(peticion, nombre_hilo):
         print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
         return {"estado": "error", "mensaje": f"Acción desconocida: {accion}"}
 
-def enviar_respuesta():
-    pass
+def enviar_respuesta(conexion, **datos):
+    """
+    Envia una respuesta al cliente en forato json codificado en UTF-8
+    Args: conexion (socket): socket activo con el cliente
+          datos (dict): contenido de la respuesta a enviar
+    """
+    try:
+        respuesta = json.dumps(datos).encode("utf-8")
+        conexion.sendall(respuesta)
+
+    except Exception as e: 
+        print(f"[!] Error al enviar respuesta: {e}")
 
 def iniciar_servidor():
     pass
