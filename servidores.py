@@ -55,12 +55,21 @@ def procesar_peticion(peticion, nombre_hilo):
     accion = peticion.get("accion")
 
     if accion == "registrar":
-        pass 
+        mensaje = peticion.get("mensaje")
+        if not mensaje:
+            return {"estado":"error", "mensaje":"Campo 'mensaje' requerido"}
+        with lock_mensajes:
+            mensajes.append(mensaje)
+            total = len(mensajes)
+        print(f"[{nombre_hilo}] Mensaje registrado. Total acumulado: {total}")
+        return {"estado":"ok", "mensaje":"Mensaje registrado", "total": total}
+    
     elif accion == "listar":
         pass
+    
     else:
         print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
-        pass
+
 
 def enviar_respuesta():
     pass
