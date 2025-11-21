@@ -52,6 +52,16 @@ def procesar_peticion(peticion, nombre_hilo):
     Retorna un (dict) con una respuesta que contiene estado, mensaje y/o datos
     """
 
+    accion = peticion.get("accion")
+
+    if accion == "registrar":
+        pass 
+    elif accion == "listar":
+        pass
+    else:
+        print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
+        pass
+
 def enviar_respuesta():
     pass
 
