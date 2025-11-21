@@ -10,6 +10,10 @@ import json
 HOST = "127.0.0.1" 
 PORT = 50000
 
+# ALIAS DE PROTOCOLOS
+IPV4 = socket.AF_INET
+TCP = socket.SOCK_STREAM
+
 # estructura compartida para almacenar mensajes registrados
 mensajes = [] # lista global, cada mensaje es un diccionario
 lock_mensajes = threading.Lock() # asegura exclusion mutua al acceder a mensajes
@@ -90,6 +94,7 @@ def enviar_respuesta(conexion, **datos):
 
 def iniciar_servidor():
     """
-    Inicializa el socket del servidor (pasivo), 
+    Inicializa el socket del servidor (pasivo), escucha conexiones
+    entrantes y crea un nuevo hilo para cada cliente aceptado
     """
     pass
