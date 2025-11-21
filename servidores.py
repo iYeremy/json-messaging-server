@@ -9,3 +9,10 @@ import json
 
 HOST = "127.0.0.1" 
 PORT = 50000
+
+# estructura compartida para almacenar mensajes registrados
+mensajes = [] # lista global, cada mensaje es un diccionario
+lock_mensajes = threading.Lock() # asegura exclusion mutua al acceder a mensajes
+
+def manejar_cliente():
+    pass
