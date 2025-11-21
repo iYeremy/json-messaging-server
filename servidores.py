@@ -95,9 +95,19 @@ def enviar_respuesta(conexion, **datos):
     except Exception as e: 
         print(f"[!] Error al enviar respuesta: {e}")
 
-def iniciar_servidor():
+def iniciar_servidor(self):
     """
     Inicializa el socket del servidor (pasivo), escucha conexiones
     entrantes y crea un nuevo hilo para cada cliente aceptado
     """
-    pass
+    with socket.socket(IPV4, TCP) as servidor: # creacion de un socket de escucha
+        servidor.bind((self.HOST, self.PORT)) # vincula a un IP y un PORT
+        servidor.listen() # espera conexiones entrantes de clientes
+        print(f"[+] Servidor escuchando en {self.HOST}:{self.PORT}")
+
+        while True:
+            conn, addr = servidor.accept() # crea un nuevo canal para un cliente
+            hilo = threading.Thread(target=manejar_cliente,
+                                    args={conn, addr}
+                                    )
+            hilo.start()
