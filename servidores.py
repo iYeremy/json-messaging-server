@@ -37,8 +37,8 @@ def manejar_cliente(conexion, direccion):
             respuesta = procesar_peticion()
             enviar_respuesta()
             pass 
-    except Exception as exc:
-        pass
+    except Exception as e:
+        print(f"[{nombre_hilo}] Error inesperado: {e}")
     finally:
         pass
 
