@@ -42,3 +42,12 @@ def manejar_cliente(conexion, direccion):
         pass
     finally:
         pass
+
+def procesar_peticion():
+    pass
+
+def enviar_respuesta():
+    pass
+
+def iniciar_servidor():
+    pass
