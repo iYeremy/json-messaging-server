@@ -89,4 +89,7 @@ def enviar_respuesta(conexion, **datos):
         print(f"[!] Error al enviar respuesta: {e}")
 
 def iniciar_servidor():
+    """
+    Inicializa el socket del servidor (pasivo), 
+    """
     pass
