@@ -21,3 +21,9 @@ def manejar_cliente(direccion):
     """
     nombre_hilo = threading.current_thread().name
     print(f"[{nombre_hilo}] Sesion iniciada con {direccion}")
+    try:
+        pass
+    except Exception as exc:
+        pass
+    finally:
+        pass
