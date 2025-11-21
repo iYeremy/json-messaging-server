@@ -108,6 +108,9 @@ def iniciar_servidor(self):
         while True:
             conn, addr = servidor.accept() # crea un nuevo canal para un cliente
             hilo = threading.Thread(target=manejar_cliente,
-                                    args={conn, addr}
+                                    args=(conn, addr)
                                     )
             hilo.start()
+
+if __name__ == "__main__":
+    iniciar_servidor()
