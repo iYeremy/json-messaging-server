@@ -7,6 +7,7 @@ import socket
 import threading
 import json
 
+# PARAMETROS DE RED
 HOST = "127.0.0.1" 
 PORT = 50000
 
@@ -14,8 +15,10 @@ PORT = 50000
 IPV4 = socket.AF_INET
 TCP = socket.SOCK_STREAM
 
-# estructura compartida para almacenar mensajes registrados
+# BUFFER DE MENSAJES
 mensajes = [] # lista global, cada mensaje es un diccionario
+
+# CONTROL DE CONCURRENCIA
 lock_mensajes = threading.Lock() # asegura exclusion mutua al acceder a mensajes
 
 def manejar_cliente(conexion, direccion):
