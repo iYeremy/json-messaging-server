@@ -34,7 +34,7 @@ def manejar_cliente(conexion, direccion):
                 print(f"[{nombre_hilo}] Error: JSON invalido")
                 enviar_respuesta()
                 continue
-            respuesta = procesar_peticion()
+            respuesta = procesar_peticion(peticion, nombre_hilo)
             enviar_respuesta()
             pass 
     except Exception as e:
@@ -43,8 +43,14 @@ def manejar_cliente(conexion, direccion):
         conexion.close()
         print(f"[{nombre_hilo}] Conexion cerrada con {direccion}")
 
-def procesar_peticion():
-    pass
+def procesar_peticion(peticion, nombre_hilo):
+    """
+    Procesa una peticion del cliente, ya validada como json
+    Args: peticion (dict): diccionario con la accion solicitada y datos
+          nombre_hilo (str): nombre del hilo que atiende al cliente
+
+    Retorna un (dict) con una respuesta que contiene estado, mensaje y/o datos
+    """
 
 def enviar_respuesta():
     pass
