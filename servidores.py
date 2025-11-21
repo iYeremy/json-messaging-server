@@ -26,6 +26,11 @@ def manejar_cliente(conexion, direccion):
             data = conexion.recv(1024) # recibe y lee hasta 1024 bits en su flujo
             if not data: 
                 break
+            try:
+                pass # descodificar datos de bytes a texto
+                # despues intepretarlos como JSON (deserializacion)
+            except json.JSONDecodeError:
+                pass
     except Exception as exc:
         pass
     finally:
