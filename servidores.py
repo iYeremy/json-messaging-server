@@ -40,7 +40,8 @@ def manejar_cliente(conexion, direccion):
     except Exception as e:
         print(f"[{nombre_hilo}] Error inesperado: {e}")
     finally:
-        pass
+        conexion.close()
+        print(f"[{nombre_hilo}] Conexion cerrada con {direccion}")
 
 def procesar_peticion():
     pass
