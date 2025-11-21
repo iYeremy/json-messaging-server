@@ -66,10 +66,10 @@ def procesar_peticion(peticion, nombre_hilo):
     
     elif accion == "listar":
         pass
-    
+
     else:
         print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
-
+        return {"estado": "error", "mensaje": f"Acción desconocida: {accion}"}
 
 def enviar_respuesta():
     pass
