@@ -68,7 +68,7 @@ def procesar_peticion(peticion, nombre_hilo):
         texto = peticion.get("mensaje")
         if not usuario or not texto:
             return {"estado":"error", "respuesta":"Solicitud incompleta"}
-        nuevo = {"usuario:":usuario, "mensaje":texto}
+        nuevo = {"usuario":usuario, "mensaje":texto}
         with lock_mensajes:
             mensajes.append(nuevo)
             total = len(mensajes)
