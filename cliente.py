@@ -94,5 +94,7 @@ def cerrar_conexion(conexion_cliente):
     Args: conexion_cliente(socket): conexion a cerrar
     """
 
+    fin = {"accion":"salir"}
+    conexion_cliente.sendall(json.dumps(fin).encode("utf-8"))
 def iniciar_cliente():
     pass
