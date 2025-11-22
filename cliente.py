@@ -41,6 +41,12 @@ def enviar(conexion_cliente, paquete):
 
 
 def registrar_mensaje(conexion_cliente):
+    """
+    Solicita al usuario su nombre y mensaje, y los envia al servidor
+
+    Args: conexion_cliente (socket): canal TCP conectado al servidor
+    Retorna un bool donde indica si la operacion se ejecuto correctamente o no
+    """
     pass
 
 def listar_mensajes(conexion_cliente):
