@@ -75,7 +75,7 @@ def procesar_peticion(peticion, nombre_hilo):
         print(f"[{nombre_hilo}] Mensaje registrado. Total acumulado: {total}")
         return {"estado":"ok", 
                 "respuesta":"Mensaje registrado", 
-                "total_mensajes": {total}
+                "total_mensajes": total
                 }
     
     elif accion == "listar":
