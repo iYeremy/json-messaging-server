@@ -7,10 +7,7 @@ import socket
 import threading
 import json
 import os # Para el caso en que exista otro server
-
-# PARAMETROS DE RED
-HOST = "127.0.0.1" 
-PORT = 50000
+from config import HOST, PORT, MAX_MSG_LEN
 
 # ALIAS DE PROTOCOLOS
 IPV4 = socket.AF_INET
@@ -66,6 +63,10 @@ def procesar_peticion(peticion, nombre_hilo):
     if accion == "registrar":
         usuario = peticion.get("usuario")
         texto = peticion.get("mensaje")
+        if len(texto)> MAX_MSG_LEN:
+            return{"estado":"error", 
+                   "respuesta": f"El mensaje supera el maximo de {MAX_MSG_LEN} caracteres"
+                   }
         if not usuario or not texto:
             return {"estado":"error", "respuesta":"Solicitud incompleta"}
         nuevo = {"usuario":usuario, "mensaje":texto}
