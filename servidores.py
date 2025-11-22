@@ -6,6 +6,7 @@ Atiende multiples clientes simultaneamente usando hilos y json
 import socket
 import threading
 import json
+import os # Para el caso en que exista otro server
 
 # PARAMETROS DE RED
 HOST = "127.0.0.1" 
@@ -95,7 +96,7 @@ def enviar_respuesta(conexion, **datos):
     except Exception as e: 
         print(f"[!] Error al enviar respuesta: {e}")
 
-def iniciar_servidor():
+def inicializar_servidor():
     """
     Inicializa el socket del servidor (pasivo), escucha conexiones
     entrantes y crea un nuevo hilo para cada cliente aceptado
@@ -113,5 +114,17 @@ def iniciar_servidor():
                                     )
             hilo.start()
 
+def iniciar_servidor_guardado():
+    if os.path.exists("server.lock"):
+        print("[!] Ya hay un servidor iniciado.")
+        return
+    with open("server.lock", "w") as f:
+        f.write("activo")
+    try:
+        inicializar_servidor()  # llama a tu funcion real del servidor
+    finally:
+        os.remove("server.lock")
+
+
 if __name__ == "__main__":
-    iniciar_servidor()
+    iniciar_servidor_guardado()
