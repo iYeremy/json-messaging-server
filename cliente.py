@@ -61,7 +61,7 @@ def registrar_mensaje(conexion_cliente):
         print(f"[+] {respuesta.get('respuesta')}")
         print(f"[#] Total mensajes: {respuesta.get('total_mensajes')}")
     else:
-        print(f"[X] Error: {respuesta.get('respuesta')}")
+        print(f"[1] Error: {respuesta.get('respuesta')}")
         return True
     
 def listar_mensajes(conexion_cliente):
@@ -73,7 +73,19 @@ def listar_mensajes(conexion_cliente):
     """
     solicitud = {"accion":"listar"}
     respuesta = enviar(conexion_cliente, solicitud)
-    
+    if respuesta is None:
+        return False
+    if respuesta.get("estado") == "ok":
+        mensajes = respuesta.get("mensajes", [])
+        print("[/] Mensajes registrados: ")
+        for msg in mensajes:
+            usuario = msg.get("usuario", "anonimo")
+            texto = msg.get("mensaje", "")
+            print(f"- {usuario}: {texto}")
+
+    else:
+        print("[!] Error: {respuesta.get('respuesta')}")
+
 
 def cerrar_conexion(conexion_cliente):
     pass
