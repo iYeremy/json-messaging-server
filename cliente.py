@@ -33,6 +33,11 @@ def enviar(conexion_cliente, paquete):
     if not datos:
         print("[CLIENTE] EL servidor cerro la conexion")
         return None
+    try:
+        return json.loads(datos.decode("utf-8").strip())
+    except Exception:
+        print("[CLIENTE] La respuesta del servidor no es valida")
+        return None
 
 
 def registrar_mensaje(conexion_cliente):
