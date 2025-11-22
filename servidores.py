@@ -75,17 +75,21 @@ def procesar_peticion(peticion, nombre_hilo):
         print(f"[{nombre_hilo}] Mensaje registrado. Total acumulado: {total}")
         return {"estado":"ok", 
                 "respuesta":"Mensaje registrado", 
-                "total": {total}}
+                "total_mensajes": {total}
+                }
     
     elif accion == "listar":
         with lock_mensajes:
-            lista = mensajes.copy() # copia de la lista global
-        print(f"[{nombre_hilo}] Listando {len(lista)} mensajes")
-        return {"estado":"ok", "mensaje": lista}
+            copia = list(mensajes) # copia de la lista global
+        print(f"[{nombre_hilo}] Listando {len(copia)} mensajes")
+        return {"estado":"ok", 
+                "mensajes": copia
+                }
 
     else:
         print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
-        return {"estado": "error", "mensaje": f"Acción desconocida: {accion}"}
+        return {"estado": "error", 
+                "respuesta": f"Acción desconocida: {accion}"}
 
 def enviar_respuesta(conexion, **datos):
     """
