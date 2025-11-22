@@ -71,6 +71,9 @@ def listar_mensajes(conexion_cliente):
     Args: conexion_cliente (socket): conexion activa con el servidor
     Retorna un bool donde indica si se pudo listar o no
     """
+    solicitud = {"accion":"listar"}
+    respuesta = enviar(conexion_cliente, solicitud)
+    
 
 def cerrar_conexion(conexion_cliente):
     pass
