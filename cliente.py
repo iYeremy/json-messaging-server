@@ -98,5 +98,18 @@ def cerrar_conexion(conexion_cliente):
         conexion_cliente.sendall(json.dumps(fin).encode("utf-8"))
     except:
         pass
+
+def mostrar_menu():
+    """
+    Despliegue del menu de opciones
+
+    Retorna un (str) que sera la opcion seleccionada por el usuario
+    """
+    print("\n=== Menu Cliente ===")
+    print("1) Registrar mensaje")
+    print("2) Listar mensajes")
+    print("3) Salir")
+    return input("Seleccione una opcion: ").strip()
+
 def iniciar_cliente():
     pass
