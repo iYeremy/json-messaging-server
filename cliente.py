@@ -63,8 +63,14 @@ def registrar_mensaje(conexion_cliente):
     else:
         print(f"[X] Error: {respuesta.get('respuesta')}")
         return True
+    
 def listar_mensajes(conexion_cliente):
-    pass
+    """
+    Solicita al servidor la lista completa de mensajes almacenados
+
+    Args: conexion_cliente (socket): conexion activa con el servidor
+    Retorna un bool donde indica si se pudo listar o no
+    """
 
 def cerrar_conexion(conexion_cliente):
     pass
