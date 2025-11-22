@@ -47,8 +47,22 @@ def registrar_mensaje(conexion_cliente):
     Args: conexion_cliente (socket): canal TCP conectado al servidor
     Retorna un bool donde indica si la operacion se ejecuto correctamente o no
     """
-    pass
-
+    print("Vas a registrar un mensaje, rellena los requisitos:" + "\n")
+    usuario = input("Ingrese su nombre de usuario: ").strip()
+    mensaje = input("Ingrese el mensaje a registrar")
+    if not usuario or not mensaje:
+        print("[!] Nombre de usuario y mensaje obligatorios")
+        return True
+    solicitud = {"accion":"registrar", "usuario":usuario, "mensaje": mensaje}
+    respuesta = enviar(conexion_cliente, solicitud)
+    if respuesta is None:
+        return False
+    if respuesta.get("estado" == "ok"):
+        print(f"[+] {respuesta.get('respuesta')}")
+        print(f"[#] Total mensajes: {respuesta.get('total_mensajes')}")
+    else:
+        print(f"[X] Error: {respuesta.get('respuesta')}")
+        return True
 def listar_mensajes(conexion_cliente):
     pass
 
