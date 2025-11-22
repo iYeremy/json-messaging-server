@@ -1,5 +1,5 @@
 from servidores import iniciar_servidor_guardado
-#TODO: from cliente import iniciar_cliente
+from cliente import iniciar_cliente
 
 def main():
     print("=== Sistema de Mensajes ===")
@@ -10,8 +10,7 @@ def main():
     if opcion == "1":
         iniciar_servidor_guardado()
     elif opcion == "2":
-        #TODO: iniciar_cliente()
-        pass
+        iniciar_cliente()
     else:
         print("opcion invalida :(")
 
