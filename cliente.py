@@ -7,10 +7,7 @@ manejando respuestas y errores
 
 import socket
 import json
-
-# PARAMETROS DE RED
-HOST = "127.0.0.1" 
-PORT = 50000
+from config import HOST, PORT, MAX_MSG_LEN
 
 def enviar(conexion_cliente, paquete):
     """
@@ -49,9 +46,12 @@ def registrar_mensaje(conexion_cliente):
     """
     print("Vas a registrar un mensaje, rellena los requisitos:" + "\n")
     usuario = input("Ingrese su nombre de usuario: ").strip()
-    mensaje = input("Ingrese el mensaje a registrar: ")
+    mensaje = input(f"Ingrese el mensaje a registrar (max {MAX_MSG_LEN} caracteres): ")
     if not usuario or not mensaje:
         print("[!] Nombre de usuario y mensaje obligatorios")
+        return True
+    if len(mensaje) > MAX_MSG_LEN:
+        print(f"[!] El mensaje excede el máximo permitido de {MAX_MSG_LEN} caracteres")
         return True
     solicitud = {"accion":"registrar", "usuario":usuario, "mensaje": mensaje}
     respuesta = enviar(conexion_cliente, solicitud)
