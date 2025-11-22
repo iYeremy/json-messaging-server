@@ -7,7 +7,7 @@ import socket
 import threading
 import json
 import os # Para el caso en que exista otro server
-from config import HOST, PORT, MAX_MSG_LEN
+from config import HOST, PORT, MAX_MSG_LEN, VERDE, AZUL, ROJO, AMARILLO, RESET
 
 # ALIAS DE PROTOCOLOS
 IPV4 = socket.AF_INET
@@ -27,7 +27,7 @@ def manejar_cliente(conexion, direccion):
           direccion(tuple): direccion IP y puerto del cliente
     """
     nombre_hilo = threading.current_thread().name
-    print(f"[{nombre_hilo}] Sesion iniciada con {direccion}")
+    print(f"{AZUL}[{nombre_hilo}] Sesion iniciada con {direccion}{RESET}")
     try:
         while True:
             data = conexion.recv(1024) # recibe y lee hasta 1024 bits en su flujo
@@ -36,9 +36,9 @@ def manejar_cliente(conexion, direccion):
             try:
                 peticion = json.loads(data.decode("utf-8"))
                 accion = peticion.get("accion","<sin accion>")
-                print(f"[{nombre_hilo}] Accion recibida: {accion}")
+                print(f"{AZUL}[{nombre_hilo}] Accion recibida: {accion}{RESET}")
             except json.JSONDecodeError:
-                print(f"[{nombre_hilo}] Error: JSON invalido")
+                print(f"{ROJO}[{nombre_hilo}] Error: JSON invalido{RESET}")
                 enviar_respuesta(conexion, estado = "error", mensaje="Formato JSON invalido")
                 continue
             respuesta = procesar_peticion(peticion, nombre_hilo)
@@ -47,7 +47,7 @@ def manejar_cliente(conexion, direccion):
         print(f"[{nombre_hilo}] Error inesperado: {e}")
     finally:
         conexion.close()
-        print(f"[{nombre_hilo}] Conexion cerrada con {direccion}")
+        print(f"{ROJO}[{nombre_hilo}] Conexion cerrada con {direccion}{RESET}")
 
 def procesar_peticion(peticion, nombre_hilo):
     """
@@ -73,7 +73,7 @@ def procesar_peticion(peticion, nombre_hilo):
         with lock_mensajes:
             mensajes.append(nuevo)
             total = len(mensajes)
-        print(f"[{nombre_hilo}] Mensaje registrado. Total acumulado: {total}")
+        print(f"{VERDE}[{nombre_hilo}] Mensaje registrado. Total acumulado: {total}{RESET}")
         return {"estado":"ok", 
                 "respuesta":"Mensaje registrado", 
                 "total_mensajes": total
@@ -82,16 +82,16 @@ def procesar_peticion(peticion, nombre_hilo):
     elif accion == "listar":
         with lock_mensajes:
             copia = list(mensajes) # copia de la lista global
-        print(f"[{nombre_hilo}] Listando {len(copia)} mensajes")
+        print(f"{VERDE}[{nombre_hilo}] Listando {len(copia)} mensajes{RESET}")
         return {"estado":"ok", 
                 "mensajes": copia
                 }
     elif accion == "salir":
-        print(f"[{nombre_hilo}] Cliente solicitó cerrar la sesión")
+        print(f"{AMARILLO}[{nombre_hilo}] Cliente solicito cerrar la sesipn{RESET}")
         return {"estado": "ok", "respuesta": "Sesión cerrada"}
     
     else:
-        print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
+        print(f"{ROJO}[{nombre_hilo}] Accion no reconocida: {accion}{RESET}")
         return {"estado": "error", 
                 "respuesta": f"Acción desconocida: {accion}"}
 

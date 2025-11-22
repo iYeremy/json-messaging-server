@@ -7,7 +7,7 @@ manejando respuestas y errores
 
 import socket
 import json
-from config import HOST, PORT, MAX_MSG_LEN
+from config import HOST, PORT, MAX_MSG_LEN, VERDE, AZUL, ROJO, AMARILLO, RESET
 
 def enviar(conexion_cliente, paquete):
     """
@@ -25,15 +25,15 @@ def enviar(conexion_cliente, paquete):
         conexion_cliente.sendall(texto.encode("utf-8"))
         datos = conexion_cliente.recv(1024) # flujo de bits que se van a enviar
     except Exception as e:
-        print("[CLIENTE] Error de comunicacion")
+        print(f"{ROJO}[CLIENTE] Error de comunicacion{RESET}")
         return None
     if not datos:
-        print("[CLIENTE] EL servidor cerro la conexion")
+        print(f"{ROJO}[CLIENTE] El servidor cerro la conexion{RESET}")
         return None
     try:
         return json.loads(datos.decode("utf-8").strip())
     except Exception:
-        print("[CLIENTE] La respuesta del servidor no es valida")
+        print(f"{ROJO}[CLIENTE] La respuesta del servidor no es valida{RESET}")
         return None
 
 
@@ -44,14 +44,14 @@ def registrar_mensaje(conexion_cliente):
     Args: conexion_cliente (socket): canal TCP conectado al servidor
     Retorna un bool donde indica si la operacion se ejecuto correctamente o no
     """
-    print("Vas a registrar un mensaje, rellena los requisitos:" + "\n")
-    usuario = input("Ingrese su nombre de usuario: ").strip()
-    mensaje = input(f"Ingrese el mensaje a registrar (max {MAX_MSG_LEN} caracteres): ")
+    print(f"{AZUL}Vas a registrar un mensaje, rellena los requisitos:{RESET}\n")
+    usuario = input(f"{AZUL}Ingrese su nombre de usuario: {RESET}").strip()
+    mensaje = input(f"{AZUL}Ingrese el mensaje a registrar (max {MAX_MSG_LEN} caracteres): {RESET}")
     if not usuario or not mensaje:
-        print("[!] Nombre de usuario y mensaje obligatorios")
+        print(f"{ROJO}[!] Nombre de usuario y mensaje obligatorios{RESET}")
         return True
     if len(mensaje) > MAX_MSG_LEN:
-        print(f"[!] El mensaje excede el máximo permitido de {MAX_MSG_LEN} caracteres")
+        print(f"{ROJO}[!] El mensaje excede el máximo permitido de {MAX_MSG_LEN} caracteres{RESET}")
         return True
     solicitud = {"accion":"registrar", "usuario":usuario, "mensaje": mensaje}
     respuesta = enviar(conexion_cliente, solicitud)
@@ -59,10 +59,10 @@ def registrar_mensaje(conexion_cliente):
         return False
 
     if respuesta.get("estado") == "ok":
-        print(f"[+] {respuesta.get('respuesta')}")
-        print(f"[#] Total mensajes: {respuesta.get('total_mensajes')}")
+        print(f"{VERDE}[+] {respuesta.get('respuesta')}{RESET}")
+        print(f"{VERDE}[#] Total mensajes: {respuesta.get('total_mensajes')}{RESET}")
     else:
-        print(f"[1] Error: {respuesta.get('respuesta')}")
+        print(f"{ROJO}[!] Error: {respuesta.get('respuesta')}{RESET}")
     return True
     
 def listar_mensajes(conexion_cliente):
@@ -78,14 +78,14 @@ def listar_mensajes(conexion_cliente):
         return False
     if respuesta.get("estado") == "ok":
         mensajes = respuesta.get("mensajes", [])
-        print("[/] Mensajes registrados: ")
+        print(f"{AMARILLO}[/] Mensajes registrados: {RESET}")
         for msg in mensajes:
             usuario = msg.get("usuario", "anonimo")
             texto = msg.get("mensaje", "")
-            print(f"- {usuario}: {texto}")
+            print(f"{AMARILLO}- {usuario}: {texto}{RESET}")
 
     else:
-        print(f"[!] Error: {respuesta.get('respuesta')}")
+        print(f"{ROJO}[!] Error: {respuesta.get('respuesta')}{RESET}")
     return True
 
 def cerrar_conexion(conexion_cliente):
@@ -106,23 +106,23 @@ def mostrar_menu():
 
     Retorna un (str) que sera la opcion seleccionada por el usuario
     """
-    print("\n=== Menu Cliente ===")
-    print("1) Registrar mensaje")
-    print("2) Listar mensajes")
-    print("3) Salir")
-    return input("Seleccione una opcion: ").strip()
+    print(f"\n{AZUL}=== Menu Cliente ==={RESET}")
+    print(f"{AZUL}1) Registrar mensaje{RESET}")
+    print(f"{AZUL}2) Listar mensajes{RESET}")
+    print(f"{AZUL}3) Salir{RESET}")
+    return input(f"{AZUL}Seleccione una opcion: {RESET}").strip()
 
 def iniciar_cliente():
     """
     Establece la conexion, muestra el menu y gestiona operaciones
     """
-    print(f"[CLIENTE] Intentando conectar a {HOST}:{PORT}...")
+    print(f"{AMARILLO}[CLIENTE] Intentando conectar a {HOST}:{PORT}...{RESET}")
     try:
         conexion_cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conexion_cliente.connect((HOST, PORT))
-        print("[CLIENTE] Conexion establecida con el servidor.")
+        print(f"{VERDE}[CLIENTE] Conexion establecida con el servidor.{RESET}")
     except Exception as e:
-        print(f"[CLIENTE] No se pudo conectar: {e}")
+        print(f"{ROJO}[CLIENTE] No se pudo conectar: {e}{RESET}")
         return
 
     while True:
@@ -137,13 +137,13 @@ def iniciar_cliente():
             cerrar_conexion(conexion_cliente)
             break
         else:
-            print("[!] Opcion invalida. Intente de nuevo :(")
+            print(f"{ROJO}[!] Opcion invalida. Intente de nuevo :({RESET}")
 
     try:
         conexion_cliente.close()
     except Exception:
         pass
-    print("[CLIENTE] Conexion finalizada.")
+    print(f"{AMARILLO}[CLIENTE] Conexion finalizada.{RESET}")
 
 if __name__ == "__main__":
     iniciar_cliente()
