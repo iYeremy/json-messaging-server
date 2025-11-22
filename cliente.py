@@ -5,23 +5,40 @@ enviar solicitudes de registro y consulta de mensajes,
 manejando respuestas y errores 
 """
 
-import socket
+import conexion_clienteet
 import json
 
 # PARAMETROS DE RED
 HOST = "127.0.0.1" 
 PORT = 50000
 
-def enviar(sock, paquete):
+def enviar(conexion_cliente, paquete):
+    """
+    Serializa un objeto python a json y lo envia a traves del socket
+    Luego recibe la respuesta del servidor, intenta descodificarla desde json
+    y la retorna como diccionario de python
+
+    Args: conexion_cliente (socket): conexion activa con el servidor
+          paquete (dict): solicitud a enviar al servidor
+
+    Retorna un (dict) con la respuesta decodificada o None si hay error
+    """
+    try:
+        texto = json.dumps(paquete) + "\n"
+        conexion_cliente.sendall(texto.encode("utf-8"))
+        datos = conexion_cliente.recv(1024)
+    except Exception as e:
+        print("[CLIENTE] Error de comunicacion")
+        return None
+
+
+def registrar_mensaje(conexion_cliente):
     pass
 
-def registrar_mensaje(sock):
+def listar_mensajes(conexion_cliente):
     pass
 
-def listar_mensajes(sock):
-    pass
-
-def cerrar_conexion(sock):
+def cerrar_conexion(conexion_cliente):
     pass
 
 def iniciar_cliente():
