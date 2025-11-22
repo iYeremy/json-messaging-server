@@ -88,7 +88,11 @@ def listar_mensajes(conexion_cliente):
 
 
 def cerrar_conexion(conexion_cliente):
-    pass
+    """
+    Intenta notificar al servidor el cierre de sesion y cerrar el socket
+
+    Args: conexion_cliente(socket): conexion a cerrar
+    """
 
 def iniciar_cliente():
     pass
