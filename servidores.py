@@ -85,7 +85,10 @@ def procesar_peticion(peticion, nombre_hilo):
         return {"estado":"ok", 
                 "mensajes": copia
                 }
-
+    elif accion == "salir":
+        print(f"[{nombre_hilo}] Cliente solicitó cerrar la sesión")
+        return {"estado": "ok", "respuesta": "Sesión cerrada"}
+    
     else:
         print(f"[{nombre_hilo}] Accion no reconocida: {accion}")
         return {"estado": "error", 
