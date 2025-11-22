@@ -57,13 +57,13 @@ def registrar_mensaje(conexion_cliente):
     respuesta = enviar(conexion_cliente, solicitud)
     if respuesta is None:
         return False
-    
-    if respuesta.get("estado" == "ok"):
+
+    if respuesta.get("estado") == "ok":
         print(f"[+] {respuesta.get('respuesta')}")
         print(f"[#] Total mensajes: {respuesta.get('total_mensajes')}")
     else:
         print(f"[1] Error: {respuesta.get('respuesta')}")
-        return True
+    return True
     
 def listar_mensajes(conexion_cliente):
     """
@@ -85,7 +85,7 @@ def listar_mensajes(conexion_cliente):
             print(f"- {usuario}: {texto}")
 
     else:
-        print("[!] Error: {respuesta.get('respuesta')}")
+        print(f"[!] Error: {respuesta.get('respuesta')}")
 
 
 def cerrar_conexion(conexion_cliente):
@@ -137,7 +137,7 @@ def iniciar_cliente():
             cerrar_conexion(conexion_cliente)
             break
         else:
-            print("[!] Opcion inválida. Intente de nuevo :(")
+            print("[!] Opcion invalida. Intente de nuevo :(")
 
     try:
         conexion_cliente.close()
