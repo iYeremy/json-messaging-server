@@ -125,6 +125,5 @@ def iniciar_servidor_guardado():
     finally:
         os.remove("server.lock")
 
-
 if __name__ == "__main__":
     iniciar_servidor_guardado()
