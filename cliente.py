@@ -5,7 +5,7 @@ enviar solicitudes de registro y consulta de mensajes,
 manejando respuestas y errores 
 """
 
-import conexion_clienteet
+import socket
 import json
 
 # PARAMETROS DE RED
@@ -26,9 +26,12 @@ def enviar(conexion_cliente, paquete):
     try:
         texto = json.dumps(paquete) + "\n"
         conexion_cliente.sendall(texto.encode("utf-8"))
-        datos = conexion_cliente.recv(1024)
+        datos = conexion_cliente.recv(1024) # flujo de bits que se van a enviar
     except Exception as e:
         print("[CLIENTE] Error de comunicacion")
+        return None
+    if not datos:
+        print("[CLIENTE] EL servidor cerro la conexion")
         return None
 
 
