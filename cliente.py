@@ -49,7 +49,7 @@ def registrar_mensaje(conexion_cliente):
     """
     print("Vas a registrar un mensaje, rellena los requisitos:" + "\n")
     usuario = input("Ingrese su nombre de usuario: ").strip()
-    mensaje = input("Ingrese el mensaje a registrar")
+    mensaje = input("Ingrese el mensaje a registrar: ")
     if not usuario or not mensaje:
         print("[!] Nombre de usuario y mensaje obligatorios")
         return True
