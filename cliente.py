@@ -144,3 +144,5 @@ def iniciar_cliente():
         pass
     print("[CLIENTE] Conexion finalizada.")
 
+if __name__ == "__main__":
+    iniciar_cliente()
