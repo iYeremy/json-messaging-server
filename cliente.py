@@ -112,4 +112,35 @@ def mostrar_menu():
     return input("Seleccione una opcion: ").strip()
 
 def iniciar_cliente():
-    pass
+    """
+    Establece la conexion, muestra el menu y gestiona operaciones
+    """
+    print(f"[CLIENTE] Intentando conectar a {HOST}:{PORT}...")
+    try:
+        conexion_cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        conexion_cliente.connect((HOST, PORT))
+        print("[CLIENTE] Conexion establecida con el servidor.")
+    except Exception as e:
+        print(f"[CLIENTE] No se pudo conectar: {e}")
+        return
+
+    while True:
+        opcion = mostrar_menu()
+        if opcion == "1":
+            if not registrar_mensaje(conexion_cliente):
+                break
+        elif opcion == "2":
+            if not listar_mensajes(conexion_cliente):
+                break
+        elif opcion == "3":
+            cerrar_conexion(conexion_cliente)
+            break
+        else:
+            print("[!] Opcion inválida. Intente de nuevo :(")
+
+    try:
+        conexion_cliente.close()
+    except Exception:
+        pass
+    print("[CLIENTE] Conexion finalizada.")
+
