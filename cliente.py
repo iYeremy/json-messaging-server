@@ -86,7 +86,7 @@ def listar_mensajes(conexion_cliente):
 
     else:
         print(f"[!] Error: {respuesta.get('respuesta')}")
-
+    return True
 
 def cerrar_conexion(conexion_cliente):
     """
