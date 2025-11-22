@@ -64,14 +64,18 @@ def procesar_peticion(peticion, nombre_hilo):
     accion = peticion.get("accion")
 
     if accion == "registrar":
-        mensaje = peticion.get("mensaje")
-        if not mensaje:
-            return {"estado":"error", "mensaje":"Campo 'mensaje' requerido"}
+        usuario = peticion.get("usuario")
+        texto = peticion.get("mensaje")
+        if not usuario or not texto:
+            return {"estado":"error", "respuesta":"Solicitud incompleta"}
+        nuevo = {"usuario:":usuario, "mensaje":texto}
         with lock_mensajes:
-            mensajes.append(mensaje)
+            mensajes.append(nuevo)
             total = len(mensajes)
         print(f"[{nombre_hilo}] Mensaje registrado. Total acumulado: {total}")
-        return {"estado":"ok", "mensaje":"Mensaje registrado", "total": total}
+        return {"estado":"ok", 
+                "respuesta":"Mensaje registrado", 
+                "total": {total}}
     
     elif accion == "listar":
         with lock_mensajes:
